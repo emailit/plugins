@@ -1,0 +1,20 @@
+{
+  "name": "emailit",
+  "displayName": "Emailit",
+  "description": "Hosted Emailit MCP server with OAuth plus skills for sending email, verifying domains, deliverability, campaigns, webhooks, and the Emailit SDKs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Emailit",
+    "email": "support@emailit.com"
+  },
+  "homepage": "https://emailit.com/docs/mcp/plugins-and-skills/",
+  "repository": "https://github.com/emailit/plugins",
+  "license": "MIT",
+  "logo": "assets/logo.png",
+  "category": "developer-tools",
+  "keywords": ["emailit", "email", "transactional-email", "email-marketing", "smtp", "deliverability", "webhooks", "mcp"],
+  "tags": ["email", "mcp", "deliverability", "developer-tools"],
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "mcpServers": "./mcp.json"
+}

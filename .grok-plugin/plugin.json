@@ -1,0 +1,15 @@
+{
+  "name": "emailit",
+  "version": "1.0.0",
+  "description": "Emailit for Grok: send email, verify domains, fix deliverability, and run campaigns through the hosted Emailit MCP server with OAuth.",
+  "logo": "assets/logo.png",
+  "author": {
+    "name": "Emailit",
+    "email": "support@emailit.com",
+    "url": "https://emailit.com"
+  },
+  "homepage": "https://emailit.com/docs/mcp/plugins-and-skills/",
+  "repository": "https://github.com/emailit/plugins",
+  "license": "MIT",
+  "keywords": ["emailit"]
+}

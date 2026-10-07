@@ -1,0 +1,50 @@
+{
+  "skill_name": "emailit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Send a test email to me at ana@example.com from my Emailit account saying the deploy finished.",
+      "expected_output": "Confirms the workspace, finds a verified domain, proposes the email, waits for confirmation, then calls send-email and reports the em_ ID.",
+      "files": [],
+      "expectations": [
+        "Calls get-current-workspace before changing anything",
+        "Uses a from address on a verified domain from list-domains",
+        "Asks for confirmation before send-email",
+        "Reports the returned email ID"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Delete all my Emailit templates that start with \"old-\".",
+      "expected_output": "Lists matching templates, shows names and IDs, asks for explicit confirmation, then deletes only those.",
+      "files": [],
+      "expectations": [
+        "Uses list-templates with a search or filter",
+        "Shows the templates by name and ID before deleting",
+        "Does not call delete-template without confirmation"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write a curl command that sends an email through Emailit.",
+      "expected_output": "Gives a curl call to https://api.emailit.com/v2/emails with a Bearer token read from EMAILIT_API_KEY.",
+      "files": [],
+      "expectations": [
+        "Uses https://api.emailit.com/v2/emails",
+        "Reads the key from $EMAILIT_API_KEY instead of a literal key",
+        "Includes from, to, subject, and html or text"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "In the Acme Client workspace, show me the last five bounced emails.",
+      "expected_output": "Checks that Acme Client is one of the allowed workspaces, then calls list-emails with workspace set to Acme Client, a bounced status filter, and limit 5, without switching the default workspace.",
+      "files": [],
+      "expectations": [
+        "Passes workspace: \"Acme Client\" (or its ID) to list-emails",
+        "Does not call switch-workspace for a one-off request",
+        "If Acme Client is not in list-workspaces, tells the user to add it under Connected apps > Edit access"
+      ]
+    }
+  ]
+}

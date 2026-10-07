@@ -1,0 +1,38 @@
+{
+  "skill_name": "emailit-get-started",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just installed the Emailit plugin. What now?",
+      "expected_output": "Checks the connection with get-current-workspace, checks domains, and offers a test send to the user.",
+      "files": [],
+      "expectations": [
+        "Calls get-current-workspace first",
+        "Calls list-domains",
+        "Offers a test email to the user before any other send"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Connect Emailit to Claude Code.",
+      "expected_output": "Gives the claude plugin or claude mcp add command for https://api.emailit.com/mcp and explains /mcp authentication.",
+      "files": [],
+      "expectations": [
+        "Uses https://api.emailit.com/mcp",
+        "Mentions OAuth sign in through /mcp",
+        "Does not ask the user to paste an API key into chat"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Emailit tools say insufficient scope when I create a domain.",
+      "expected_output": "Explains the connection has sending scope and that reconnecting with full access fixes it.",
+      "files": [],
+      "expectations": [
+        "Names the sending and full scopes",
+        "Suggests reconnecting and approving full access",
+        "Does not suggest a workaround that bypasses scopes"
+      ]
+    }
+  ]
+}

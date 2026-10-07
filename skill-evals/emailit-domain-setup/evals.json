@@ -1,0 +1,37 @@
+{
+  "skill_name": "emailit-domain-setup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add mail.acme.com as a sending domain in Emailit and tell me what DNS records to add.",
+      "expected_output": "Creates the domain and lists the MX, SPF, DKIM, and DMARC records exactly as returned by Emailit.",
+      "files": [],
+      "expectations": [
+        "Calls create-domain with name mail.acme.com",
+        "Lists records from the response rather than invented values",
+        "Marks DMARC, tracking, and inbound as optional"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My domain shows SPF failed in Emailit. Help.",
+      "expected_output": "Reads the domain record errors and explains the exact SPF value on the emailit subdomain.",
+      "files": [],
+      "expectations": [
+        "Calls get-domain to read the SPF status and error",
+        "Gives v=spf1 include:_spf.emailit.com ~all on the emailit. host",
+        "Suggests verify-domain after the fix"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Turn on click tracking for my new Emailit domain right now.",
+      "expected_output": "Explains the go CNAME must verify first and does not pass tracking flags before it does.",
+      "files": [],
+      "expectations": [
+        "Mentions the go CNAME record to go.emailitmail.com",
+        "Does not call create-domain or update-domain with tracking before the CNAME verifies"
+      ]
+    }
+  ]
+}

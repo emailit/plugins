@@ -1,0 +1,20 @@
+{
+  "name": "emailit",
+  "owner": {
+    "name": "Emailit",
+    "email": "support@emailit.com"
+  },
+  "metadata": {
+    "description": "Official Emailit plugin for Claude Code and Grok: hosted MCP server and email skills."
+  },
+  "plugins": [
+    {
+      "name": "emailit",
+      "description": "Send email, verify domains, fix deliverability, and run campaigns with Emailit.",
+      "source": "./",
+      "category": "development",
+      "homepage": "https://emailit.com",
+      "tags": ["email", "mcp", "deliverability", "transactional-email", "email-marketing", "smtp"]
+    }
+  ]
+}

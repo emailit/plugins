@@ -1,0 +1,17 @@
+{
+  "name": "emailit",
+  "owner": {
+    "name": "Emailit",
+    "email": "support@emailit.com"
+  },
+  "metadata": {
+    "description": "Official Emailit plugin: hosted MCP server and email skills."
+  },
+  "plugins": [
+    {
+      "name": "emailit",
+      "source": "./",
+      "description": "Send email, verify domains, fix deliverability, and run campaigns with Emailit."
+    }
+  ]
+}

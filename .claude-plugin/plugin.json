@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "emailit",
+  "displayName": "Emailit",
+  "version": "1.0.0",
+  "description": "Hosted Emailit MCP server with OAuth plus skills for sending email, verifying domains, deliverability, campaigns, webhooks, and the Emailit SDKs.",
+  "author": {
+    "name": "Emailit",
+    "email": "support@emailit.com",
+    "url": "https://emailit.com"
+  },
+  "homepage": "https://emailit.com/docs/mcp/plugins-and-skills/",
+  "repository": "https://github.com/emailit/plugins",
+  "license": "MIT",
+  "keywords": ["emailit", "email", "transactional-email", "email-marketing", "smtp", "deliverability", "webhooks"]
+}

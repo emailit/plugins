@@ -1,0 +1,104 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "emailit",
+  "version": "1.0.0",
+  "description": "Send transactional email, run campaigns and automations, manage contacts and sending domains, and fix deliverability with Emailit.",
+  "author": {
+    "name": "Emailit",
+    "email": "support@emailit.com",
+    "url": "https://emailit.com"
+  },
+  "homepage": "https://emailit.com/docs/mcp/plugins-and-skills/",
+  "repository": "https://github.com/emailit/plugins",
+  "license": "MIT",
+  "keywords": ["emailit", "email", "transactional-email", "email-marketing", "deliverability", "smtp", "webhooks"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Emailit",
+        "shortDescription": "Send email and run campaigns",
+        "longDescription": "Emailit connects ChatGPT and Codex to your Emailit workspaces. Send transactional email from your verified domains, check delivery status, and investigate bounces and complaints. Add and verify sending domains with step-by-step DNS help. Manage contacts, audiences, suppressions, and templates. Draft and send marketing campaigns, run automations, verify email lists, and set up webhooks.\n\nSign in with your Emailit account and choose which workspaces to allow: all of them, or only the ones you select. Tools that send email or delete data are marked so ChatGPT and Codex can ask you before running them. Codex users also get skills for integrating the Emailit API and SDKs into their code.",
+        "developerName": "Emailit",
+        "category": "Productivity",
+        "capabilities": [
+          "Send and schedule email",
+          "Track delivery and bounces",
+          "Set up and verify domains",
+          "Manage contacts and audiences",
+          "Draft and send campaigns",
+          "Configure webhooks"
+        ],
+        "websiteURL": "https://emailit.com",
+        "supportURL": "https://emailit.com/contact/",
+        "privacyPolicyURL": "https://emailit.com/privacy-policy/",
+        "termsOfServiceURL": "https://emailit.com/terms-of-service/",
+        "defaultPrompt": [
+          "Which of my Emailit sending domains are not verified yet?",
+          "Show my emails that bounced this week and why.",
+          "Draft a welcome campaign for my newest audience."
+        ],
+        "brandColor": "#15C182",
+        "brandColorDark": "#15C182",
+        "composerIcon": "./assets/icon-192.png",
+        "composerIconDark": "./assets/icon-192.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo.png"
+      },
+      "onboardingSkill": "./skills/emailit-get-started/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Identify the connected workspace",
+              "prompt": "Which Emailit workspace am I connected to?",
+              "tools_triggered": "get-current-workspace",
+              "expected_behavior": "Returns the workspace name and ID for the signed-in account without changing anything."
+            },
+            {
+              "description": "Review sending domain verification",
+              "prompt": "List my sending domains and tell me which ones are not verified.",
+              "tools_triggered": "list-domains, get-domain",
+              "expected_behavior": "Lists the workspace domains and, for any unverified domain, names the DNS records that are missing or invalid."
+            },
+            {
+              "description": "Investigate recent bounces",
+              "prompt": "Show my last 5 bounced emails and explain why they bounced.",
+              "tools_triggered": "list-emails, get-email",
+              "expected_behavior": "Lists up to five emails with status bounced, newest first, with recipient, subject, and the bounce reason from each email."
+            },
+            {
+              "description": "Create an audience and add a subscriber",
+              "prompt": "Create an audience called Beta testers and add reviewer@example.com to it.",
+              "tools_triggered": "create-audience, add-audience-subscriber",
+              "expected_behavior": "Creates the audience, adds the address as a subscriber, and returns the audience ID and subscriber ID."
+            },
+            {
+              "description": "Draft a campaign without sending",
+              "prompt": "Draft a short welcome campaign for the Beta testers audience, but do not send it.",
+              "tools_triggered": "list-audiences, create-campaign, update-campaign",
+              "expected_behavior": "Creates a draft campaign with a subject and HTML body, attaches the Beta testers audience as recipients, and confirms it was not sent."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated creative writing request",
+              "prompt": "Write me a short poem about autumn leaves."
+            },
+            {
+              "description": "Personal inbox access is out of scope",
+              "prompt": "Read my Gmail inbox and summarize today's messages."
+            },
+            {
+              "description": "Purchased list sending violates the acceptable use policy",
+              "prompt": "Send our newsletter to the 50,000 email addresses I bought from a list vendor yesterday."
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "release_notes": "First release: hosted Emailit MCP server with OAuth, 109 tools, and skills for setup, domains, deliverability, campaigns, webhooks, and SDKs."
+      }
+    }
+  }
+}

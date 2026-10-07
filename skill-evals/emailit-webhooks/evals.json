@@ -1,0 +1,39 @@
+{
+  "skill_name": "emailit-webhooks",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an Emailit webhook to https://api.acme.com/hooks/emailit for bounces and complaints.",
+      "expected_output": "Creates the webhook with email.bounced and email.complained and tells the user to store the secret as EMAILIT_WEBHOOK_SECRET.",
+      "files": [],
+      "expectations": [
+        "Calls create-webhook with events email.bounced and email.complained",
+        "Tells the user to store the secret in an environment variable",
+        "Does not subscribe to all events"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write an Express handler for Emailit webhooks.",
+      "expected_output": "Uses the raw body, verifies X-Emailit-Signature with HMAC-SHA256 over timestamp.body, checks the timestamp, and loops over the event array.",
+      "files": [],
+      "expectations": [
+        "Reads the raw body before JSON parsing",
+        "Signs timestamp + \".\" + raw body with HMAC-SHA256",
+        "Uses a constant time comparison",
+        "Treats the body as an array of events"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "My Emailit webhook was disabled. How do I fix it?",
+      "expected_output": "Explains the 3 day failure rule, asks to fix the endpoint, and uses retry-failed-webhook-requests or update-webhook.",
+      "files": [],
+      "expectations": [
+        "Explains that continuous failures disable the webhook",
+        "Suggests fixing the endpoint before retrying",
+        "Mentions retry-failed-webhook-requests"
+      ]
+    }
+  ]
+}
