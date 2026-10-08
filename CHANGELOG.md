@@ -1,10 +1,14 @@
 # Changelog
 
+## 1.0.4
+
+- Release notes reworded. No changes to the skills or the MCP server.
+
 ## 1.0.3
 
 - The public repository no longer includes the validation tooling (`scripts/`) or the skill evals (`skill-evals/`). They aren't needed to use the plugin.
 - The README says where the skills send an Emailit API key: only to Emailit's REST API, and only when the MCP server isn't connected.
-- SDK skill: the attachment examples no longer name `logo.png` or an outside URL.
+- SDK skill: the attachment examples no longer use a file name or URL that the Claude directory's scan mistook for something the plugin sends.
 
 ## 1.0.2
 

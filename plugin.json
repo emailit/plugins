@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "emailit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Send transactional email, run campaigns and automations, manage contacts and sending domains, and fix deliverability with Emailit.",
   "author": {
     "name": "Emailit",
