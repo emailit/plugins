@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+- The public repository no longer includes the validation tooling (`scripts/`) or the skill evals (`skill-evals/`). They aren't needed to use the plugin.
+- The README says where the skills send an Emailit API key: only to Emailit's REST API, and only when the MCP server isn't connected.
+- SDK skill: the attachment examples no longer name `logo.png` or an outside URL.
+
 ## 1.0.2
 
 - The validation tooling's `package.json` and lockfile moved to `scripts/`. With them at the root, Claude Code installed the tooling's packages for everyone who installed the plugin.

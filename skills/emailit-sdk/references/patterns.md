@@ -22,12 +22,12 @@ In the template, use `{{first_name}}` and `{{reset_url}}`. The template can supp
 ```js
 attachments: [
   { filename: 'invoice.pdf', content: pdfBuffer.toString('base64'), content_type: 'application/pdf' },
-  { filename: 'terms.pdf', url: 'https://example.com/terms.pdf' },
-  { filename: 'logo.png', content: logoBase64, content_type: 'image/png', content_id: 'logo' },
+  { filename: 'terms.pdf', url: termsPdfUrl }, // a public HTTPS URL that Emailit downloads
+  { filename: 'banner.png', content: bannerBase64, content_type: 'image/png', content_id: 'banner' },
 ]
 ```
 
-Reference an inline image in HTML with `<img src="cid:logo">`. Keep the total message small; large attachments hurt delivery.
+Reference an inline image in HTML with `<img src="cid:banner">`. Keep the total message small; large attachments hurt delivery.
 
 ## Scheduling
 

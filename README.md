@@ -63,6 +63,7 @@ On grok.com, open **Connectors > New Connector > Custom** and enter `https://api
 - **OAuth 2.1 with PKCE.** Your assistant never sees your password. The assistant requests **sending** access (send and manage sent email), **full** access (everything), or both, which is the default. The consent page lists what it will be able to do, and you choose which workspaces it can use.
 - **Confirmation before impact.** Tools that send email, delete data, or call external URLs carry MCP annotations that let your client ask you first, and the skills tell the assistant to confirm. The Emailit server does not enforce the confirmation itself; whether you are asked depends on your client and its settings.
 - **Revoke at any time** in the Emailit dashboard under **Account > Connected apps**.
+- **API keys stay with Emailit.** The MCP server signs in with OAuth and needs no key. Only when it isn't connected do the skills use an Emailit API key from your environment, and only to call Emailit's own REST API (listed below). Code the SDK skill writes into your project reads the key the same way.
 - **Headless clients** (the xAI API, CI jobs) can send an Emailit API key as `Authorization: Bearer <key>` to the same server. Use a sending scope key where you can.
 
 To expose fewer tools, add `?toolsets=emails,domains` or `?read_only=true` to the server URL, or send the `X-MCP-Toolsets` and `X-MCP-Readonly` headers.
@@ -89,14 +90,7 @@ An Emailit account. Sending needs a verified sending domain; the `emailit-get-st
 
 ## Development
 
-```bash
-npm ci --prefix scripts
-npm run validate --prefix scripts
-```
-
-The tooling's `package.json` is in `scripts/`: Claude Code installs the packages of a `package.json` and lockfile at the plugin root for every user. `validate` checks every manifest against the Agent Plugins and Cursor schemas, the ChatGPT listing limits, the Claude directory rules, skill frontmatter and length, skill evals, and that every tool a skill mentions exists. `node scripts/sync-version.mjs 1.2.0` sets one version across all manifests. Also run `claude plugin validate --strict .` before a release.
-
-`skills/emailit/references/tools.md` is generated from the Emailit MCP server catalog. Do not edit it by hand.
+This repository is published from Emailit's main repository, where every change is validated against each directory's rules and the skills are tested with evals. The validation tooling and evals aren't published: nobody who installs the plugin needs them. `skills/emailit/references/tools.md` is generated from the Emailit MCP server catalog. Report problems to support@emailit.com.
 
 This repository is published from Emailit's main repository, and each release replaces its contents. Please report problems and suggestions as issues rather than pull requests.
 
