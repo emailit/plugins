@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "emailit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Send transactional email, run campaigns and automations, manage contacts and sending domains, and fix deliverability with Emailit.",
   "author": {
     "name": "Emailit",
@@ -17,9 +17,9 @@
       "interface": {
         "displayName": "Emailit",
         "shortDescription": "Send email and run campaigns",
-        "longDescription": "Emailit connects ChatGPT and Codex to your Emailit workspaces. Send transactional email from your verified domains, check delivery status, and investigate bounces and complaints. Add and verify sending domains with step-by-step DNS help. Manage contacts, audiences, suppressions, and templates. Draft and send marketing campaigns, run automations, verify email lists, and set up webhooks.\n\nSign in with your Emailit account and choose which workspaces to allow: all of them, or only the ones you select. Tools that send email or delete data are marked so ChatGPT and Codex can ask you before running them. Codex users also get skills for integrating the Emailit API and SDKs into their code.",
+        "longDescription": "Emailit is an email delivery platform for transactional email, SMTP and email marketing. This plugin lets ChatGPT and Codex work with your Emailit account: send transactional email from your verified sending domains, check whether a message was delivered, opened or clicked, and find out why an email bounced or was marked as spam.\n\nYou can also add and verify sending domains with step-by-step DNS help, manage contacts, audiences, suppressions and templates, draft and send marketing campaigns, run automations, verify email lists, and set up webhooks.\n\nSign in with your Emailit account and choose which workspaces to allow: all of them, or only the ones you select. Tools that send email or delete data are marked so ChatGPT and Codex ask you before running them. Codex users also get skills for integrating the Emailit API and SDKs into their code.",
         "developerName": "Emailit",
-        "category": "Productivity",
+        "category": "Communication",
         "capabilities": [
           "Send and schedule email",
           "Track delivery and bounces",
@@ -46,6 +46,7 @@
       },
       "onboardingSkill": "./skills/emailit-get-started/SKILL.md",
       "review": {
+        "demo_recording_url": "https://youtu.be/yUCJJLf4jpc",
         "test_cases": {
           "positive": [
             {
@@ -97,7 +98,7 @@
         "commerce": false
       },
       "publication": {
-        "release_notes": "First release: hosted Emailit MCP server with OAuth, 109 tools, and skills for setup, domains, deliverability, campaigns, webhooks, and SDKs."
+        "release_notes": "First release: hosted Emailit MCP server with OAuth, 113 tools, and skills for setup, domains, deliverability, campaigns, webhooks, and SDKs."
       }
     }
   }

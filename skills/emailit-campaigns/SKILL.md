@@ -19,7 +19,7 @@ Marketing email in Emailit is built from audiences (lists of subscribers), campa
 - Create a list: `create-audience` with `name`.
 - Add someone: `add-audience-subscriber` with the audience `id`, `email`, and optional `first_name`, `last_name`, `custom_fields`. It creates the contact if needed.
 - Contacts across all audiences: `list-contacts`, `get-contact`, `create-contact` (can join `audiences` directly), `update-contact`.
-- Many at once: `bulk-update-contacts` with up to 100 contact IDs and one action (`add_to_audience`, `remove_from_audience`, `unsubscribe`, `resubscribe`, `delete`). Confirm deletes and unsubscribes.
+- Many at once, up to 100 contact IDs per call: `bulk-add-contacts-to-audience`, `bulk-remove-contacts-from-audience`, `bulk-unsubscribe-contacts`, `bulk-resubscribe-contacts`, `bulk-delete-contacts`. Confirm deletes and unsubscribes, and only resubscribe people who asked for email again.
 - Export: `export-contacts` returns CSV for the matching contacts.
 
 For large imports (thousands of rows) point the user to CSV import in the dashboard; tool calls one at a time are slow and rate limited.

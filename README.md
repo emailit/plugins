@@ -8,7 +8,7 @@ You sign in with your Emailit account through OAuth and choose which workspaces 
 
 | Part | Description |
 | --- | --- |
-| MCP server | `https://api.emailit.com/mcp`, 109 tools across emails, domains, DMARC, templates, audiences, contacts, suppressions, campaigns, automations, forms, verification, webhooks, events, API keys, and workspaces |
+| MCP server | `https://api.emailit.com/mcp`, 113 tools across emails, domains, DMARC, templates, audiences, contacts, suppressions, campaigns, automations, forms, verification, webhooks, events, API keys, and workspaces |
 | `emailit` skill | Choosing MCP or REST, safe sending, IDs, errors, and the full tool list |
 | `emailit-get-started` skill | Connect, confirm the workspace, check a domain, send a first test email |
 | `emailit-domain-setup` skill | Add a domain, publish DNS records at any provider, verify, and fix failures |

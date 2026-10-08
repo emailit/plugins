@@ -35,15 +35,15 @@ API key connections are bound to the one workspace the key belongs to. They have
 
 Some tools reach real people or remove data. Before calling them, show the user exactly what will happen and wait for a clear yes.
 
-- **Sends to real recipients**: `send-email`, `retry-email`, `forward-email`, `send-campaign`, `trigger-automation`. Confirm the from address, recipients, subject, and content. Offer to send a test to the user first.
-- **Destructive**: `delete-*`, `cancel-email`, `cancel-campaign`, `bulk-update-contacts`, `regenerate-api-key`, `reset-webhook-secret`, `reset-form-token`. Name the object by its human name and ID.
-- **External calls**: `test-webhook` sends a request to the user's URL.
+- **Sends to real recipients**: `send-email`, `retry-email`, `forward-email`, `send-campaign`, `start-automation`, `trigger-automation`. Confirm the from address, recipients, subject, and content. Offer to send a test to the user first.
+- **Destructive**: `delete-*`, `bulk-delete-contacts`, `bulk-unsubscribe-contacts`, `update-contact` (replaces audiences), `update-campaign`, `update-automation`, `stop-automation`, `cancel-email`, `cancel-campaign`, `regenerate-api-key`, `reset-webhook-secret`, `reset-form-token`. Name the object by its human name and ID.
+- **External calls**: `test-webhook` and the webhook retries send requests to the user's URL; `create-webhook` and `update-webhook` point events at a URL; `verify-domain` and `verify-email` query DNS and mail servers; `publish-form` makes a form public.
 
 Never send to purchased or scraped lists. Emailit requires consent from every recipient. Never invent a from address: it must belong to a verified sending domain in the workspace (check with `list-domains`).
 
 ## Tools by area
 
-The server exposes 109 tools. Clients may trim them with toolsets, so some may be missing.
+The server exposes 113 tools. Clients may trim them with toolsets, so some may be missing.
 
 | Area | Main tools |
 | --- | --- |

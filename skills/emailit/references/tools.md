@@ -46,7 +46,7 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 | `list-domains` | read | full | List sending domains in the workspace. |
 | `update-domain` | update | full | Update domain settings such as open/click tracking, inbound, or DMARC report collection. |
 | `delete-domain` | delete | full | Permanently delete a domain. Sending from it stops immediately. Requires the Admin role in the workspace. |
-| `verify-domain` | action | full | Run a DNS check now and update the verification status of each record. |
+| `verify-domain` | external | full | Look up the domain's DNS records now and update the verification status of each record. |
 
 ## DMARC (`dmarc`)
 
@@ -107,9 +107,13 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 | `create-contact` | create | full | Create a contact, optionally subscribing it to audiences and setting custom fields. |
 | `get-contact` | read | full | Retrieve a contact by ID or email address. |
 | `list-contacts` | read | full | List contacts with search, audience, subscription, and custom-field filters. |
-| `update-contact` | update | full | Update a contact. Passing audiences replaces its audience memberships. |
+| `update-contact` | destructive | full | Update a contact. Passing audiences replaces its audience memberships, and unsubscribed: true stops all marketing email to it. |
 | `delete-contact` | delete | full | Permanently delete a contact and its audience memberships. |
-| `bulk-update-contacts` | destructive | full | Apply one action to up to 100 contacts: delete, add_to_audience, remove_from_audience, unsubscribe, or resubscribe. |
+| `bulk-delete-contacts` | delete | full | Permanently delete up to 100 contacts and their audience memberships. |
+| `bulk-add-contacts-to-audience` | update | full | Subscribe up to 100 contacts to an audience. |
+| `bulk-remove-contacts-from-audience` | delete | full | Remove up to 100 contacts from an audience. |
+| `bulk-unsubscribe-contacts` | destructive | full | Unsubscribe up to 100 contacts from all marketing email. They stop receiving campaigns and automations. |
+| `bulk-resubscribe-contacts` | update | full | Resubscribe up to 100 contacts. Only do this when they asked to receive email again. |
 | `export-contacts` | read | full | Export contacts matching the filters as CSV text (email, names, subscription, audiences, custom fields). |
 
 ## Suppressions (`suppressions`)
@@ -126,15 +130,15 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 
 | Tool | Kind | Scope | Description |
 | --- | --- | --- | --- |
-| `create-webhook` | create | full | Create a webhook endpoint for email, domain, contact, and campaign events. The response includes the signing secret. |
+| `create-webhook` | external | full | Create a webhook: Emailit will send email, domain, contact, and campaign events to this URL. The response includes the signing secret. |
 | `get-webhook` | read | full | Retrieve a webhook with its subscribed events and filter. |
 | `list-webhooks` | read | full | List webhooks in the workspace. |
-| `update-webhook` | update | full | Update a webhook URL, name, events, filter, or enable it again. |
+| `update-webhook` | external | full | Update a webhook URL, name, events, filter, or enable it again. Events then go to the new URL. |
 | `delete-webhook` | delete | full | Permanently delete a webhook. Pending deliveries are dropped. |
 | `test-webhook` | external | full | Send a sample event of the given type to the webhook URL and return the response. Limited to 5 per minute. |
 | `reset-webhook-secret` | destructive | full | Rotate the webhook signing secret. The old secret stops working immediately; the new one is returned once. |
-| `retry-failed-webhook-requests` | action | full | Queue every failed delivery of a webhook for retry and re-enable the webhook. |
-| `retry-webhook-request` | action | full | Queue one webhook delivery for retry. |
+| `retry-failed-webhook-requests` | external | full | Send every failed delivery of a webhook to its URL again and re-enable the webhook. |
+| `retry-webhook-request` | external | full | Send one webhook delivery to its URL again. |
 
 ## Campaigns (`campaigns`)
 
@@ -143,7 +147,7 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 | `list-campaigns` | read | full | List marketing campaigns, optionally by status. |
 | `get-campaign` | read | full | Retrieve a campaign with its content, recipients, and stats. |
 | `create-campaign` | create | full | Create a draft campaign. Add recipients with update-campaign, then send with send-campaign. |
-| `update-campaign` | update | full | Update a draft campaign. Passing recipients replaces the audience list; at least one audience must be included. |
+| `update-campaign` | destructive | full | Update a draft campaign. Passing content replaces its body and passing recipients replaces the audience list (at least one audience must be included); the previous values can't be restored. |
 | `delete-campaign` | delete | full | Permanently delete a campaign that has not been sent. |
 | `send-campaign` | send | full | Send a campaign to its audiences now, or schedule it with scheduled_at. Delivers to real subscribers, so confirm with the user first. |
 | `cancel-campaign` | destructive | full | Cancel a draft or sending campaign. Scheduled campaigns cannot be canceled; delete them to stop the send. Emails already delivered are not recalled. |
@@ -154,13 +158,13 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 | --- | --- | --- | --- |
 | `list-automations` | read | full | List automations with context, status, and name filters. |
 | `get-automation` | read | full | Retrieve an automation with its steps and connections. |
-| `create-automation` | create | full | Create a draft automation from a trigger step, action steps, and connections between step keys. Start it with start-automation. |
-| `update-automation` | update | full | Update an automation. Passing steps or connections replaces the whole graph. |
-| `delete-automation` | delete | full | Delete an automation and stop any runs in progress. |
-| `start-automation` | action | full | Start or resume an automation so new triggers enroll contacts. |
-| `pause-automation` | action | full | Pause an automation. Runs in progress wait until it is started again. |
-| `stop-automation` | action | full | Stop an automation and cancel runs in progress. |
-| `trigger-automation` | send | full | Manually trigger a running automation with an optional payload. Its steps may send real emails. |
+| `create-automation` | create | full | Save a new automation as a draft: a trigger step, action steps, and connections between step keys. Saving runs nothing; steps run only after start-automation (for each matching event) or trigger-automation (one run). Each action does the same as one tool: send_email = send-email with a template, forward_email = forward-email, add_to_audience = add-audience-subscriber, remove_from_audience = remove-audience-subscriber, edit_contact = update-contact, create_contact = create-contact, add_to_suppressions = create-suppression, remove_from_suppressions = delete-suppression. wait, condition, experiment, run_automation and end only control the flow. Steps that call webhooks can only be added in the dashboard. |
+| `update-automation` | destructive | full | Change an automation's name, description or settings, or replace its steps and connections (same step types as create-automation). Passing steps or connections replaces the whole graph; the previous steps can't be restored. |
+| `delete-automation` | delete | full | Delete an automation. New events no longer start runs; runs already in progress finish. |
+| `start-automation` | send | full | Start or resume an automation. From then on every event that matches its trigger starts a run that executes its steps for real, including sending emails and changing contacts (see get-automation for the steps). Each run uses 3 credits. |
+| `pause-automation` | action | full | Pause an automation so new events don't start runs. Runs already in progress keep going. |
+| `stop-automation` | destructive | full | Stop an automation and cancel every run in progress. Canceled runs can't be resumed, even if the automation is started again. |
+| `trigger-automation` | send | full | Start one run of a running automation now. The run executes the automation's steps right away (see get-automation), including sending real emails. The automation needs a system.manual trigger step; in contact automations pass the contact as payload.contact_id. |
 | `list-automation-runs` | read | full | List runs of an automation, optionally by status. |
 | `get-automation-run` | read | full | Retrieve one automation run with its step history. |
 | `get-automation-stats` | read | full | Return run totals by status and outcome for an automation. |
@@ -175,7 +179,7 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 | `create-form` | create | full | Create a draft signup form (popup, full page, flyout, embed, or banner). |
 | `update-form` | update | full | Update a form name, type, definition, or settings. |
 | `delete-form` | delete | full | Permanently delete a form. Embedded copies stop working. |
-| `publish-form` | action | full | Publish a form so it starts collecting signups. |
+| `publish-form` | external | full | Publish a form so it starts collecting signups from anyone with its link or embed. |
 | `unpublish-form` | action | full | Take a form offline. It stops collecting signups. |
 | `reset-form-token` | destructive | full | Rotate the public form token. Existing embed codes stop working until updated. |
 
@@ -183,7 +187,7 @@ On OAuth connections every tool outside the workspace toolset also takes an opti
 
 | Tool | Kind | Scope | Description |
 | --- | --- | --- | --- |
-| `verify-email` | create | full | Check whether one address is deliverable (syntax, MX, disposable, role, and optional SMTP checks). Uses verification credits. |
+| `verify-email` | external | full | Check whether one address is deliverable (syntax, MX, disposable, role, and optional SMTP checks). Uses verification credits. |
 | `create-verification-list` | create | full | Verify up to 10,000 addresses in the background. Uses one verification credit per address; poll get-verification-list for progress. |
 | `list-verification-lists` | read | full | List bulk verification lists with their progress. |
 | `get-verification-list` | read | full | Retrieve a verification list with progress and result counts. |
