@@ -90,11 +90,11 @@ An Emailit account. Sending needs a verified sending domain; the `emailit-get-st
 ## Development
 
 ```bash
-npm install
-npm run validate
+npm ci --prefix scripts
+npm run validate --prefix scripts
 ```
 
-`validate` checks every manifest against the Agent Plugins and Cursor schemas, the ChatGPT listing limits, the Claude directory rules, skill frontmatter and length, skill evals, and that every tool a skill mentions exists. `npm run sync-version 1.2.0` sets one version across all manifests. Also run `claude plugin validate --strict .` before a release.
+The tooling's `package.json` is in `scripts/`: Claude Code installs the packages of a `package.json` and lockfile at the plugin root for every user. `validate` checks every manifest against the Agent Plugins and Cursor schemas, the ChatGPT listing limits, the Claude directory rules, skill frontmatter and length, skill evals, and that every tool a skill mentions exists. `node scripts/sync-version.mjs 1.2.0` sets one version across all manifests. Also run `claude plugin validate --strict .` before a release.
 
 `skills/emailit/references/tools.md` is generated from the Emailit MCP server catalog. Do not edit it by hand.
 

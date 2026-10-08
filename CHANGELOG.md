@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- The validation tooling's `package.json` and lockfile moved to `scripts/`. With them at the root, Claude Code installed the tooling's packages for everyone who installed the plugin.
+
 ## 1.0.1
 
 - `bulk-update-contacts` is now five tools, one per action: `bulk-add-contacts-to-audience`, `bulk-remove-contacts-from-audience`, `bulk-unsubscribe-contacts`, `bulk-resubscribe-contacts`, and `bulk-delete-contacts`. The server has 113 tools.

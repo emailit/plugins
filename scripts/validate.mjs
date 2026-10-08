@@ -135,6 +135,11 @@ function checkFiles(files) {
     });
     if (/\bsecret_[A-Za-z0-9]{16,}|\bwhsec_[a-f0-9]{16,}/.test(text)) fail(`${path}: looks like a real Emailit key or webhook secret`);
   }
+  // Claude Code runs a package install for every user when the plugin root has
+  // package.json and a lockfile, and the Claude directory holds such plugins
+  // for review. The validation tooling lives in scripts/ instead.
+  const lockfile = ['package-lock.json', 'npm-shrinkwrap.json', 'bun.lock', 'bun.lockb'].find((name) => existsSync(join(root, name)));
+  if (lockfile && existsSync(join(root, 'package.json'))) fail(`package.json and ${lockfile} at the plugin root: Claude Code would install packages for every user. Keep tooling in scripts/`);
   pass(`${files.length} files checked`);
 }
 
@@ -149,7 +154,7 @@ function checkVersions(manifests) {
   for (const [path, data] of entries) {
     if (!data) continue;
     if (data.name !== 'emailit') fail(`${path}: name must be "emailit"`);
-    if (data.version !== version) fail(`${path}: version ${data.version} does not match plugin.json ${version}. Run npm run sync-version.`);
+    if (data.version !== version) fail(`${path}: version ${data.version} does not match plugin.json ${version}. Run node scripts/sync-version.mjs.`);
   }
   if (!readText('CHANGELOG.md').includes(`## ${version}`)) fail(`CHANGELOG.md has no "## ${version}" entry`);
   const cursorEntry = manifests.cursorMarketplace?.plugins?.find((plugin) => plugin.name === 'emailit');

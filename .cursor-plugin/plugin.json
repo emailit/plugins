@@ -2,7 +2,7 @@
   "name": "emailit",
   "displayName": "Emailit",
   "description": "Hosted Emailit MCP server with OAuth plus skills for sending email, verifying domains, deliverability, campaigns, webhooks, and the Emailit SDKs.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Emailit",
     "email": "support@emailit.com"

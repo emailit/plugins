@@ -7,7 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const MANIFESTS = ['plugin.json', '.cursor-plugin/plugin.json', '.claude-plugin/plugin.json', '.grok-plugin/plugin.json', 'package.json'];
+const MANIFESTS = ['plugin.json', '.cursor-plugin/plugin.json', '.claude-plugin/plugin.json', '.grok-plugin/plugin.json'];
 
 const version = process.argv[2] || JSON.parse(readFileSync(join(root, 'plugin.json'), 'utf8')).version;
 if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(version)) {

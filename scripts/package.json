@@ -1,0 +1,19 @@
+{
+  "name": "@emailit/plugins",
+  "private": true,
+  "description": "Validation tooling for the Emailit plugin. It lives in scripts/ because Claude Code installs the packages of a package.json and lockfile at the plugin root for every user.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node validate.mjs",
+    "validate:offline": "node validate.mjs --offline",
+    "sync-version": "node sync-version.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}
